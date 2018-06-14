@@ -4,7 +4,7 @@
 1. Fork OpenBMC到我的github然後把.bb導向我的git
 
 Question
-1. soruce code改完應該要做patch上傳嗎
+1. soruce code改完應該要做patch上傳嗎 -> patch後, 會產生再meta裡面, 再進行commit
 2. 如果不做Patch, source coode位置在哪?
 
 
