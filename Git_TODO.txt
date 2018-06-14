@@ -1,0 +1,126 @@
+
+[20180614]
+(OpenBMC training)
+1. Fork OpenBMC到我的github然後把.bb導向我的git
+
+Question
+1. soruce code改完應該要做patch上傳嗎
+2. 如果不做Patch, source coode位置在哪?
+
+
+(新進)
+1. 印表機設定 -> invalid user -> call who? 18676佳戰
+	有沒辦法用online storage可以在印表機現場抓檔? 以免一直跑上跑下 -> remote desk
+	Invalid user -> 設定黑白列印就ok
+	
+
+2. 申請supernote -> Service desk要先修改個資到自己的簽核群組才能開簽 -> 正在簽 
+-> 需要上傳同意的聯絡單並且簽到處級主管以上 -> 取消internet
+-> 經管課級主管會簽* -> 誰是經管課級
+	找高雄HR問18201 或 天津王麗49263
+
+3. 
+
+
+[20180613]
+1. 我可以samba進build service開檔來改嗎, 效率高低
+2. 我應該在build server 做git的clone/push/commit最有效率嗎
+3. openbmc如何去修改一個功能到release?
+	git clone source code
+	branch???
+	configure env
+	bitbake obmc-...
+	----------------------------------------
+	devtool modify what I want
+
+	....
+
+	git commit
+	git push origin HEAD:refs/for/master
+
+
+
+[20180612]
+(task_1_clone openbmc & build)
+Build Server: 10.62.32.74
+Account: edward/edward1234
+Source: https://github.com/openbmc/openbmc
+Target: Machine zaius
+
+<1> 要跟Github建立SSH金鑰
+	Permission denied (publickey).
+	fatal: Could not read from remote repository.
+	git config --global user.name "jayoaoa"
+	git config --global user.email "jayoaoa@gmail.com" 
+	ssh-keygen -t rsa -C “jayoaoa@gmail.com”
+	pass -> empty
+
+	.ssh/id_rsa.pub 內容傳到github
+
+	github個人首頁: settings--->ssh and gpg keys-->new ssh key 添加即可。title自行命名
+
+<2> CLONE: git clone git@github.com:openbmc/openbmc.git
+<3> 設定TEMPLATECONF (絕對路徑)
+	export TEMPLATECONF=/home/edward/obmc/openbmc/meta-openbmc-machines/meta-openpower/meta-ingrasys/meta-zaius/conf
+
+<4> . openbmc-env
+<5> bitbake obmc-phosphor-image
+
+(task_2_learn workflow)
+SSH 帳號：edward
+SSH 密碼：14kWo{[3
+DNS：10.62.32.71
+
+目前有三台 build container，SSH Host 都是 001.bmc-ks.xyz。
+Container Debian32-Wheezy 的 SSH Port = 2000
+Container Debian64-Stretch 的 SSH Port = 2001
+Container Ubuntu64-Xenial 的 SSH Port = 2002
+Gerrit 的網址 https://gerrit.bmc-ks.xyz
+Gitweb 的網址 https://gitweb.bmc-ks.xyz/
+設定文件在 https://data.bmc-ks.xyz/
+先跟著 "Setup Git Environment" 和 "Setup OpenGPG" 跑一遍
+
+Samba 比較麻煩，一定要在檔案總管按滑鼠右鍵，選「新增網路磁碟機」來新增
+
+Host 在 //002.bmc-ks.xyz/homes
+帳號 tecfw-data
+密碼 |c<MYVxD
+
+上面這個 samba 是高雄的共用資料夾，
+個人資料夾的 samba 位置在 //001.bmc-ks.xyz/homes
+用個人帳密登入
+
+
+(訂便當 or call 黃欣雅 18664)
+http://10.62.145.145/lunchOrder/Default.asp
+
+(上網+分機 call 19012)
+WIFI 
+SSID: 700301
+User: DC0055
+Pass: foxconn88
+分機: 18162
+
+有線設定
+services.msc -> 啟動wired autoconfig
+乙太網路 -> 內容 -> 驗證 -> PEAP -> 設定 -> [取消]透過驗證憑證來確認.... -> 下面設定 -> [不要勾]自動使用我的...
+		-> [確定] -> 閜面其他設定 -> 指定驗證模式選[使用者驗證] -> 旁邊按鈕按下 -> 輸入帳密 DC0055/foxconn88 -> [確定] -> done
+
+
+(提交個資)
+http://114.foxconn.com/HelpYourself.aspx
+
+()
+[20180611]
+(NewGuy)
+O 1. 申請電話機+網路
+	-> 打給18888問單子交到哪裡去 -> 發Mail給19012請他們上來裝電話搞好網路 -> DONE! 網路孔接線不良
+2. 申請SuperNotes帳號,上網帳號,mail
+	-> 6/14再來申請
+(Tech)
+1. Ask Ken for task.
+	tomorrow
+2. Create 14.04 desktop for openbmc env
+	ok
+3. Create qemu ast2500-evb environment
+4. Learn Openbmc
